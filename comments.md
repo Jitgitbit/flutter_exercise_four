@@ -14,7 +14,3 @@ don't forget the power of option-shift-F, formatting ! Problem with VS Code upda
 open -a Simulator.app
 
 extract widget              --->  splitting up widgets within the file !! super handy !!
-
-A Problem! : Once a meal has been added to favorites, it can't be removed. There is no clean way of fixing this without state management.
-You can fix it in a dirty way, which includes mutation, though.
-But using state management is the way to go, which we will see in the next BIG exercise.
