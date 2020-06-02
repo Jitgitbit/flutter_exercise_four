@@ -53,7 +53,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                   child: ch,                            //---------> here the child for the consumer is passed on !
                   value: cart.itemCount.toString(),
                 ),
-            child: IconButton(
+            child: IconButton(                        //------> so this child will not be rebuilt (special case with consumer), better performance !
               icon: Icon(
                 Icons.shopping_cart,
               ),
