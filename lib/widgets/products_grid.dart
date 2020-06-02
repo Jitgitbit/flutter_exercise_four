@@ -1,32 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/product_item.dart';
-import '../providers/products_provider.dart';
+import '../providers/products.dart';
+import './product_item.dart';
+
 
 class ProductsGrid extends StatelessWidget {
+  final bool showFavs;
+
+  ProductsGrid(this.showFavs);
+
   @override
   Widget build(BuildContext context) {
-    final productsData = Provider.of<ProductsProvider>(context);
-    final products = productsData.items;
-
+    final productsData = Provider.of<Products>(context);
+    final products = showFavs ? productsData.favoriteItems : productsData.items;
     return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 3 / 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10),
-      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
-        // create: (c) => products[i],
-        value: products[i],             //-----> this works too, and is recommended if you're not creating a new list, better for performance because less rerendering !
-        child: ProductItem(
-            // products[i].id, 
-            // products[i].title, 
-            // products[i].imageUrl
-        ),
-      ),
+      padding: const EdgeInsets.all(10.0),
       itemCount: products.length,
-      padding: EdgeInsets.all(10.0),
+      itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
+            // builder: (c) => products[i],
+            value: products[i],      //-----> this works too, and is recommended if you're not creating a new list, better for performance because less rerendering !
+            child: ProductItem(
+                // products[i].id,
+                // products[i].title,
+                // products[i].imageUrl,
+                ),
+          ),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 3 / 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+      ),
     );
   }
 }

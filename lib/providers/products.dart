@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import './product.dart';
 
 
-class ProductsProvider with ChangeNotifier {
-  List<Product> _items = [                                  //remember ----> the underscore makes it a PRIVATE property !
+class Products with ChangeNotifier {
+  List<Product> _items = [
     Product(
       id: 'p1',
       title: 'Red Shirt',
@@ -37,17 +37,36 @@ class ProductsProvider with ChangeNotifier {
       imageUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
     ),
-  ];                      //remember ----> the underscore makes it a PRIVATE property !
+  ];
+  // var _showFavoritesOnly = false;
 
   List<Product> get items {
-    return [..._items];                          // so we GET a COPY of the  original items, IMMUTABILITY !
+    // if (_showFavoritesOnly) {
+    //   return _items.where((prodItem) => prodItem.isFavorite).toList();
+    // }
+    return [..._items];
   }
 
-  Product findById(String id){
+  List<Product> get favoriteItems {
+    return _items.where((prodItem) => prodItem.isFavorite).toList();
+  }
+
+  Product findById(String id) {
     return _items.firstWhere((prod) => prod.id == id);
   }
 
-  void addProducts() {
+  // void showFavoritesOnly() {
+  //   _showFavoritesOnly = true;
+  //   notifyListeners();
+  // }
+
+  // void showAll() {
+  //   _showFavoritesOnly = false;
+  //   notifyListeners();
+  // }
+
+  void addProduct() {
+    // _items.add(value);
     notifyListeners();
   }
 }
