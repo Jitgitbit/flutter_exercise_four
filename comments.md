@@ -14,3 +14,5 @@ don't forget the power of option-shift-F, formatting ! Problem with VS Code upda
 open -a Simulator.app
 
 extract widget              --->  splitting up widgets within the file !! super handy !!
+
+flutter packages get  (----> in terminal)
