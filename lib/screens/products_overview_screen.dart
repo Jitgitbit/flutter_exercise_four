@@ -50,7 +50,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
           ),
           Consumer<Cart>(                                 //----> makes sense to use Consumer here
             builder: (_, cart, ch) => Badge(             //------> No need for ctx here !
-                  child: ch,
+                  child: ch,                            //---------> here the child for the consumer is passed on !
                   value: cart.itemCount.toString(),
                 ),
             child: IconButton(
