@@ -48,8 +48,8 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                   ),
                 ],
           ),
-          Consumer<Cart>(
-            builder: (_, cart, ch) => Badge(
+          Consumer<Cart>(                                 //----> makes sense to use Consumer here
+            builder: (_, cart, ch) => Badge(             //------> No need for ctx here !
                   child: ch,
                   value: cart.itemCount.toString(),
                 ),
