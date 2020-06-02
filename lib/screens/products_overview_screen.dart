@@ -8,7 +8,7 @@ enum FilterOptions {                //-----> an enum is a way of labeling an int
   All,
 }
 
-class ProductsOverviewScreen extends StatefulWidget {
+class ProductsOverviewScreen extends StatefulWidget {                                            //---> going for local State
   @override
   _ProductsOverviewScreenState createState() => _ProductsOverviewScreenState();
 }
