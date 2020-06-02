@@ -3,7 +3,7 @@ flutter create flutter_exercise_four
 android studio, remember it's important to create a virtual device WITH the play store feature !!! Don't waste 1 GB !!!
 Pixel 2 with Android Pie API 28 created
 
-flutter run
+flutter run (-------> or better --> in taskbar(up), Run, Run Without Debugging)
 
 R          ==>> restart in emulator!
 
