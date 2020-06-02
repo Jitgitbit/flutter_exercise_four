@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/products_grid.dart';
+import '../widgets/badge.dart';
+import '../providers/cart.dart';
 
-
-enum FilterOptions {                //-----> an enum is a way of labeling an integer !
+enum FilterOptions {                     //-----> an enum is a way of labeling an integer !
   Favorites,
   All,
 }
 
-class ProductsOverviewScreen extends StatefulWidget {                                            //---> going for local State
+class ProductsOverviewScreen extends StatefulWidget {                                  //---> going for local State
   @override
   _ProductsOverviewScreenState createState() => _ProductsOverviewScreenState();
 }
@@ -20,7 +22,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('PhoenixFlutterShop'),
+        title: Text('MyShop'),
         actions: <Widget>[
           PopupMenuButton(
             onSelected: (FilterOptions selectedValue) {
@@ -45,6 +47,18 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                     value: FilterOptions.All,
                   ),
                 ],
+          ),
+          Consumer<Cart>(
+            builder: (_, cart, ch) => Badge(
+                  child: ch,
+                  value: cart.itemCount.toString(),
+                ),
+            child: IconButton(
+              icon: Icon(
+                Icons.shopping_cart,
+              ),
+              onPressed: () {},
+            ),
           ),
         ],
       ),
