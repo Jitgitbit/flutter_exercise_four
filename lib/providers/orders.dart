@@ -24,7 +24,7 @@ class Orders with ChangeNotifier {
   }
 
   void addOrder(List<CartItem> cartProducts, double total) {
-    _orders.insert(
+    _orders.insert(                                              //---> add adds at the end of a list, insert adds in the beginning !
       0,
       OrderItem(
         id: DateTime.now().toString(),

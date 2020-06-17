@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../providers/cart.dart' show Cart; //---> "show Cart" because we don't want to import the cartItem from cart.dart, to prevent having double class with same name !
 import '../widgets/cart_item.dart';
+import '../providers/orders.dart';
+
 
 class CartScreen extends StatelessWidget {
   static const routeName = '/cart';
@@ -39,7 +41,13 @@ class CartScreen extends StatelessWidget {
                   ),
                   FlatButton(
                     child: Text('ORDER NOW'),
-                    onPressed: () {},
+                    onPressed: () {
+                      Provider.of<Orders>(context, listen: false).addOrder(       //---> here we only want to dispatch an action, so we don't listen to changes !
+                        cart.items.values.toList(),
+                        cart.totalAmount,
+                      );
+                      cart.clear();
+                    },
                     textColor: Theme.of(context).primaryColor,
                   )
                 ],
