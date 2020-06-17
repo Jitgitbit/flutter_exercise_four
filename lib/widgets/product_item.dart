@@ -33,9 +33,9 @@ class ProductItem extends StatelessWidget {
         ),
         footer: GridTileBar(
           backgroundColor: Colors.black87,
-          leading: Consumer<Product>(                         //---> with Consumer we now only reload the subpart for favorites, i.o the whole ProductItem Widget Tree !
-            builder: (ctx, product, _) => IconButton(        //---> the third arg 'child' can be used in case we want to even avoid reloading a subpart within Consumer ! 
-                  icon: Icon(                               //---> no need for the child here, so '_' instead !
+          leading: Consumer<Product>(                      //---> with Consumer we now only reload the subpart for favorites, i.o the whole ProductItem Widget Tree !
+            builder: (ctx, product, _) => IconButton(     //---> the third arg 'child' can be used in case we want to even avoid reloading a subpart within Consumer ! 
+                  icon: Icon(                            //---> no need for the child here, so '_' instead !
                     product.isFavorite ? Icons.favorite : Icons.favorite_border,
                   ),
                   color: Theme.of(context).accentColor,
@@ -54,6 +54,21 @@ class ProductItem extends StatelessWidget {
             ),
             onPressed: () {
               cart.addItem(product.id, product.price, product.title);
+              Scaffold.of(context).hideCurrentSnackBar();
+              Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'Added item to cart!',
+                  ),
+                  duration: Duration(seconds: 2),
+                  action: SnackBarAction(
+                    label: 'UNDO',
+                    onPressed: () {
+                      cart.removeSingleItem(product.id);
+                    },
+                  ),
+                ),
+              );
             },
             color: Theme.of(context).accentColor,
           ),
