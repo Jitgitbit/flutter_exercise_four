@@ -62,4 +62,9 @@ class Cart with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void removeItem(String productId) {
+    _items.remove(productId);
+    notifyListeners();                  //---> THE EASIEST way of getting rid of an entry in a map !!! lol
+  }
 }
