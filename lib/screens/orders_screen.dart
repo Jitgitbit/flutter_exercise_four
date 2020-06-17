@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../providers/orders.dart' show Orders;
+import '../providers/orders.dart' show Orders;    //------> again preventing name clash here !
 import '../widgets/order_item.dart';
 
 class OrdersScreen extends StatelessWidget {
