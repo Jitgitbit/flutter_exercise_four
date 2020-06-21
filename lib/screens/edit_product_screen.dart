@@ -24,15 +24,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
               TextFormField(
                 decoration: InputDecoration(labelText: 'Title'),
                 textInputAction: TextInputAction.next,
-                onFieldSubmitted: (_) {
-                  FocusScope.of(context).requestFocus(_priceFocusNode);
+                onFieldSubmitted: (_) {                                         // --> actual submit is ignored this way (_)
+                  FocusScope.of(context).requestFocus(_priceFocusNode);        // --> this manages where the input is focused
                 },
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Price'),
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
-                focusNode: _priceFocusNode,
+                focusNode: _priceFocusNode,                                 // --> focus identified for input, here submit will not be ignored
               ),
             ],
           ),
