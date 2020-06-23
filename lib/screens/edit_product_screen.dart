@@ -10,11 +10,13 @@ class EditProductScreen extends StatefulWidget {
 class _EditProductScreenState extends State<EditProductScreen> {
   final _priceFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
+  final _imageUrlController = TextEditingController();
 
   @override
-  void dispose() {                                   // ------> you have to use dispose() in order to make sure to clear up that memory after use
+  void dispose() {                                      // ------> you have to use dispose() in order to make sure to clear up that memory after use
     _priceFocusNode.dispose();
     _descriptionFocusNode.dispose();
+    _imageUrlController.dispose();
     super.dispose();
   }
 
@@ -32,15 +34,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
               TextFormField(
                 decoration: InputDecoration(labelText: 'Title'),
                 textInputAction: TextInputAction.next,
-                onFieldSubmitted: (_) {                                        // --> actual submit is ignored this way (_)
-                  FocusScope.of(context).requestFocus(_priceFocusNode);       // --> this manages where the input is focused
+                onFieldSubmitted: (_) {                                           // --> actual submit is ignored this way (_)
+                  FocusScope.of(context).requestFocus(_priceFocusNode);          // --> this manages where the input is focused
                 },
               ),
               TextFormField(
                 decoration: InputDecoration(labelText: 'Price'),
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
-                focusNode: _priceFocusNode,                                // --> focus identified for input, here submit will not be ignored           
+                focusNode: _priceFocusNode,                                           // --> focus identified for input, here submit will not be ignored
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_descriptionFocusNode);
                 },
@@ -49,7 +51,42 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 decoration: InputDecoration(labelText: 'Description'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
-                focusNode: _descriptionFocusNode,                                   // --> focus identified for input, here submit will not be ignored
+                focusNode: _descriptionFocusNode,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Container(
+                    width: 100,
+                    height: 100,
+                    margin: EdgeInsets.only(
+                      top: 8,
+                      right: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1,
+                        color: Colors.grey,
+                      ),
+                    ),
+                    child: _imageUrlController.text.isEmpty
+                        ? Text('Enter a URL')
+                        : FittedBox(
+                            child: Image.network(
+                              _imageUrlController.text,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      decoration: InputDecoration(labelText: 'Image URL'),
+                      keyboardType: TextInputType.url,
+                      textInputAction: TextInputAction.done,
+                      controller: _imageUrlController,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
