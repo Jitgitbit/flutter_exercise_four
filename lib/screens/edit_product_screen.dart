@@ -52,7 +52,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           // 'imageUrl': _editedProduct.imageUrl,
           'imageUrl': '',
         };
-        _imageUrlController.text = _editedProduct.imageUrl;
+        _imageUrlController.text = _editedProduct.imageUrl;        //---> the controller will set the initial values for imageUrl only ! (see in builder!)
       }
     }
     _isInit = false;
@@ -222,10 +222,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   ),
                   Expanded(
                     child: TextFormField(
+                      // initialValue: _initValues['imageUrl'],
                       decoration: InputDecoration(labelText: 'Image URL'),
                       keyboardType: TextInputType.url,
                       textInputAction: TextInputAction.done,
-                      controller: _imageUrlController,
+                      controller: _imageUrlController,                     //---> here the controller does the initialValues (can't have both!)
                       focusNode: _imageUrlFocusNode,
                       onFieldSubmitted: (_) {
                         _saveForm();
