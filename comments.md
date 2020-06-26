@@ -15,4 +15,4 @@ open -a Simulator.app
 
 extract widget              --->  splitting up widgets within the file !! super handy !!
 
-flutter packages get  (----> in terminal)
+flutter packages get  (----> in terminal) (if needed, normally flutter will get the packages automatically)
