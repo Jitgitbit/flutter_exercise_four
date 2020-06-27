@@ -68,24 +68,31 @@ class Products with ChangeNotifier {
   // }
 
   void addProduct(Product product) {
-    const url = 'https://phoenixfluttershop.firebaseio.com/products.json';
-    http.post(url, body: json.encode({
-      'title': product.title,
-      'description': product.description,
-      'imageUrl': product.imageUrl,
-      'price': product.price,
-      'isFavorite': product.isFavorite,
-    }),);
-    final newProduct = Product(
-      title: product.title,
-      description: product.description,
-      price: product.price,
-      imageUrl: product.imageUrl,
-      id: DateTime.now().toString(),
-    );
-    _items.add(newProduct);
-    // _items.insert(0, newProduct); // at the start of the list
-    notifyListeners();
+    const url = 'https://flutter-update.firebaseio.com/products.json';
+    http
+        .post(
+      url,
+      body: json.encode({
+        'title': product.title,
+        'description': product.description,
+        'imageUrl': product.imageUrl,
+        'price': product.price,
+        'isFavorite': product.isFavorite,
+      }),
+    )
+        .then((response) {
+          print(json.decode(response.body));                   //---> looking for and using the real id !
+      final newProduct = Product(
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl,
+        id: json.decode(response.body)['name'],               //---> looking for and using the real id !
+      );
+      _items.add(newProduct);
+      // _items.insert(0, newProduct); // at the start of the list
+      notifyListeners();
+    });
   }
 
   void updateProduct(String id, Product newProduct) {
