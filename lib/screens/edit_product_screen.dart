@@ -100,7 +100,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
         await Provider.of<Products>(context, listen: false)
             .addProduct(_editedProduct);
       } catch (error) {
-        await showDialog(
+        await showDialog<Null>(
           context: context,
           builder: (ctx) => AlertDialog(
                 title: Text('An error occurred!'),
