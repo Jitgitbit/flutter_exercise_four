@@ -16,7 +16,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _descriptionFocusNode = FocusNode();
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
-  final _form = GlobalKey<FormState>();                                 //---> you only need global keys very rarely
+  final _form = GlobalKey<FormState>();
   var _editedProduct = Product(
     id: null,
     title: '',
@@ -53,7 +53,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           // 'imageUrl': _editedProduct.imageUrl,
           'imageUrl': '',
         };
-        _imageUrlController.text = _editedProduct.imageUrl;                    //---> the controller will set the initial values for imageUrl only ! (see in builder!)
+        _imageUrlController.text = _editedProduct.imageUrl;
       }
     }
     _isInit = false;
@@ -61,7 +61,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   }
 
   @override
-  void dispose() {                                             // ------> you have to use dispose() in order to make sure to clear up that memory after use
+  void dispose() {
     _imageUrlFocusNode.removeListener(_updateImageUrl);
     _priceFocusNode.dispose();
     _descriptionFocusNode.dispose();
@@ -83,7 +83,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
   }
 
-  void _saveForm() {
+  Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
     if (!isValid) {
       return;
@@ -100,27 +100,31 @@ class _EditProductScreenState extends State<EditProductScreen> {
       });
       Navigator.of(context).pop();
     } else {
-      Provider.of<Products>(context, listen: false)
-          .addProduct(_editedProduct)
-          .catchError((error) {
-        return showDialog<Null>(
+      try {
+        await Provider.of<Products>(context, listen: false)
+            .addProduct(_editedProduct);
+      } catch (error) {
+        await showDialog<Null>(
           context: context,
           builder: (ctx) => AlertDialog(
                 title: Text('An error occurred!'),
                 content: Text('Something went wrong.'),
                 actions: <Widget>[
-                  FlatButton(child: Text('Okay'), onPressed: () {
-                    Navigator.of(ctx).pop();
-                  },)
+                  FlatButton(
+                    child: Text('Okay'),
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
+                    },
+                  )
                 ],
               ),
         );
-      }).then((_) {
+      } finally {
         setState(() {
           _isLoading = false;
         });
         Navigator.of(context).pop();
-      });
+      }
     }
     // Navigator.of(context).pop();
   }
@@ -151,8 +155,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       initialValue: _initValues['title'],
                       decoration: InputDecoration(labelText: 'Title'),
                       textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (_) {                                       // --> actual submit is ignored this way (_)
-                        FocusScope.of(context).requestFocus(_priceFocusNode);      // --> this manages where the input is focused
+                      onFieldSubmitted: (_) {
+                        FocusScope.of(context).requestFocus(_priceFocusNode);
                       },
                       validator: (value) {
                         if (value.isEmpty) {
@@ -175,7 +179,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                       decoration: InputDecoration(labelText: 'Price'),
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.number,
-                      focusNode: _priceFocusNode,                              // --> focus identified for input, here submit will not be ignored
+                      focusNode: _priceFocusNode,
                       onFieldSubmitted: (_) {
                         FocusScope.of(context)
                             .requestFocus(_descriptionFocusNode);
@@ -258,7 +262,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             decoration: InputDecoration(labelText: 'Image URL'),
                             keyboardType: TextInputType.url,
                             textInputAction: TextInputAction.done,
-                            controller: _imageUrlController,                          //---> here the controller does the initialValues (can't have both!)
+                            controller: _imageUrlController,
                             focusNode: _imageUrlFocusNode,
                             onFieldSubmitted: (_) {
                               _saveForm();
