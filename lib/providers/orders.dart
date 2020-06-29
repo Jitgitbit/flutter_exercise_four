@@ -32,7 +32,7 @@ class Orders with ChangeNotifier {
     final List<OrderItem> loadedOrders = [];
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
     if (extractedData == null) {
-      return;
+      return;                                                                           //----> in case there are no orders in db
     }
     extractedData.forEach((orderId, orderData) {
       loadedOrders.add(
