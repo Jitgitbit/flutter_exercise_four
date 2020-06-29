@@ -1,25 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/app_drawer.dart';
 import '../widgets/products_grid.dart';
 import '../widgets/badge.dart';
 import '../providers/cart.dart';
 import './cart_screen.dart';
-import '../widgets/app_drawer.dart';
+import '../providers/products.dart';
 
-
-enum FilterOptions {                     //-----> an enum is a way of labeling an integer !
+enum FilterOptions {
   Favorites,
   All,
 }
 
-class ProductsOverviewScreen extends StatefulWidget {                                  //---> going for local State
+class ProductsOverviewScreen extends StatefulWidget {
   @override
   _ProductsOverviewScreenState createState() => _ProductsOverviewScreenState();
 }
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   var _showOnlyFavorites = false;
+  var _isInit = true;
+  var _isLoading = false;
+
+  @override
+  void initState() {
+    // Provider.of<Products>(context).fetchAndSetProducts(); // WON'T WORK!
+    // Future.delayed(Duration.zero).then((_) {
+    //   Provider.of<Products>(context).fetchAndSetProducts();
+    // });
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<Products>(context).fetchAndSetProducts().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +78,12 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                   ),
                 ],
           ),
-          Consumer<Cart>(                                 //----> makes sense to use Consumer here
-            builder: (_, cart, ch) => Badge(             //------> No need for ctx here !
-                  child: ch,                            //---------> here the child for the consumer is passed on !
+          Consumer<Cart>(
+            builder: (_, cart, ch) => Badge(
+                  child: ch,
                   value: cart.itemCount.toString(),
                 ),
-            child: IconButton(                        //------> so this child will not be rebuilt (special case with consumer), better performance !
+            child: IconButton(
               icon: Icon(
                 Icons.shopping_cart,
               ),
@@ -68,7 +95,11 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
         ],
       ),
       drawer: AppDrawer(),
-      body: ProductsGrid(_showOnlyFavorites),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ProductsGrid(_showOnlyFavorites),
     );
   }
 }
