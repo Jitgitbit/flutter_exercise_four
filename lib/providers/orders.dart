@@ -53,7 +53,7 @@ class Orders with ChangeNotifier {
         ),
       );
     });
-    _orders = loadedOrders.reversed.toList();
+    _orders = loadedOrders.reversed.toList();             //---> this way the newest order is showed first !
     notifyListeners();
   }
 
