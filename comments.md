@@ -20,3 +20,14 @@ flutter packages get  (----> in terminal) (if needed, normally flutter will get 
 ! Using the flutter built-in Futures work well as is, but for readability and because we are used to try/catch & async/await/finally from JS, here it is !
 
 ! A Future in Flutter is the equivalent of a Promise in JavaScript !
+
+NEW FB RULES:
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null",
+    "products": {
+      ".indexOn": ["creatorId"]
+    }
+  }
+}

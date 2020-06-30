@@ -74,7 +74,7 @@ class Products with ChangeNotifier {
   // }
 
   Future<void> fetchAndSetProducts() async {
-    var url = 'https://phoenixfluttershop.firebaseio.com/products.json?auth=$authToken';        // ---> when dynamic, have to change const to final !
+    var url = 'https://phoenixfluttershop.firebaseio.com/products.json?auth=$authToken&orderBy="creatorId"&equalTo="$userId"';
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -104,7 +104,7 @@ class Products with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) async {
-    final url = 'https://phoenixfluttershop.firebaseio.com/products.json?auth=$authToken';
+    final url = 'https://phoenixfluttershop.firebaseio.com/products.json?auth=$authToken';       // ---> when dynamic, have to change const to final !
     try {
       final response = await http.post(
         url,
