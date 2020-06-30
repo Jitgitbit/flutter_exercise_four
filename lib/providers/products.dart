@@ -43,6 +43,9 @@ class Products with ChangeNotifier {
     // ),
   ];
   // var _showFavoritesOnly = false;
+  final String authToken;
+
+  Products(this.authToken, this._items);                       //---> a constructor !!! yeey
 
   List<Product> get items {
     // if (_showFavoritesOnly) {
@@ -70,7 +73,7 @@ class Products with ChangeNotifier {
   // }
 
   Future<void> fetchAndSetProducts() async {
-    const url = 'https://phoenixfluttershop.firebaseio.com/products.json';
+    final url = 'https://phoenixfluttershop.firebaseio.com/products.json?auth=$authToken';        // ---> when dynamic, have to change const to final !
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;

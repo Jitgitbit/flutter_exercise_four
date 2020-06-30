@@ -39,16 +39,19 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (ctx) => Auth(),
+          create: (ctx) => Auth(),                         //===>> better use create here !  Because you are providing a brand new object ! 
         ),
-        ChangeNotifierProvider(
-          create: (ctx) => Products(),                             //===>> better use create here !  Because you are providing a brand new object !           
+        ChangeNotifierProxyProvider<Auth, Products>(
+          update: (ctx, auth, previousProducts) => Products(
+            auth.token, 
+            previousProducts == null ? [] : previousProducts.items
+          ),
         ),
         ChangeNotifierProvider(
           create: (ctx) =>  Cart(),                                //-----> version 4.0.0+ needs create i.o. builder method !
         ),
         ChangeNotifierProvider(
-          create: (ctx) =>  Orders(),
+          create: (ctx) =>  Orders(),                  //===>> better use create here !  Because you are providing a brand new object ! 
         ),
       ],
       child: Consumer<Auth>(
