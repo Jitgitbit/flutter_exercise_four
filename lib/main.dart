@@ -50,8 +50,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (ctx) =>  Cart(),                                //-----> version 4.0.0+ needs create i.o. builder method !
         ),
-        ChangeNotifierProvider(
-          create: (ctx) =>  Orders(),                  //===>> better use create here !  Because you are providing a brand new object ! 
+        ChangeNotifierProxyProvider<Auth, Orders>(
+          update: (ctx, auth, previousOrders) => Orders(
+            auth.token, 
+            previousOrders == null ? [] : previousOrders.orders
+          ),
         ),
       ],
       child: Consumer<Auth>(
