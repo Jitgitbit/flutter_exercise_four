@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_config/flutter_config.dart';
 
 import './screens/cart_screen.dart';
 // import './screens/products_overview_screen.dart';
@@ -14,7 +16,21 @@ import './screens/edit_product_screen.dart';
 import './screens/auth_screen.dart';
 
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await FlutterConfig.loadEnvVariables();
+
+  runApp(MyApp());
+}
+
+// void main() => runApp(MyApp());
+
+// Future main() async {
+//   await DotEnv().load('.env');
+//   //...runapp
+//   runApp(MyApp());
+// }
 
 class MyApp extends StatelessWidget {  
   @override
