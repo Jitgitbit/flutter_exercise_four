@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
           create: (ctx) => Auth(),                         //===>> better use create here !  Because you are providing a brand new object ! 
         ),
         ChangeNotifierProxyProvider<Auth, Products>(
+          create: (ctx) => Products('', []),
           update: (ctx, auth, previousProducts) => Products(
             auth.token, 
             previousProducts == null ? [] : previousProducts.items
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
           create: (ctx) =>  Cart(),                                //-----> version 4.0.0+ needs create i.o. builder method !
         ),
         ChangeNotifierProxyProvider<Auth, Orders>(
+          create: (ctx) => Orders('', []),
           update: (ctx, auth, previousOrders) => Orders(
             auth.token, 
             previousOrders == null ? [] : previousOrders.orders
