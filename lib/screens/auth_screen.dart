@@ -105,7 +105,7 @@ class _AuthCardState extends State<AuthCard> {
   final _passwordController = TextEditingController();
 
   void _showErrorDialog(String message) {
-    showDialog(
+    showDialog<Null>(
       context: context,
       builder: (ctx) => AlertDialog(
             title: Text('An Error Occurred!'),

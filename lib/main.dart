@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_exercise_four/screens/products_overview_screen.dart';
 import 'package:provider/provider.dart';
 // import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_config/flutter_config.dart';
 
 import './screens/cart_screen.dart';
-// import './screens/products_overview_screen.dart';
+import './screens/products_overview_screen.dart';
 import './screens/product_detail_screen.dart';
 import './providers/products.dart';
 import './providers/cart.dart';
@@ -50,15 +51,15 @@ class MyApp extends StatelessWidget {
           create: (ctx) =>  Orders(),
         ),
       ],
-      child: MaterialApp(
+      child: Consumer<Auth>(
+        builder: (ctx, auth, _) => MaterialApp(
           title: 'PhoenixFlutterShop',
           theme: ThemeData(
             primarySwatch: Colors.purple,
             accentColor: Colors.deepOrange,
             fontFamily: 'Lato',
           ),
-          home: AuthScreen(),
-          // home: ProductsOverviewScreen(),
+          home: auth.isAuth ? ProductsOverviewScreen() : AuthScreen(),
           routes: {
             ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
             CartScreen.routeName: (ctx) => CartScreen(),
@@ -66,6 +67,7 @@ class MyApp extends StatelessWidget {
             UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
             EditProductScreen.routeName: (ctx) => EditProductScreen(),
           }),
+        ) ,
     );
   }
 }
