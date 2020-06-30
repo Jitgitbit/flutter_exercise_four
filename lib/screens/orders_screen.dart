@@ -10,7 +10,7 @@ class OrdersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('building orders ----------> this should only appear once: making sure there is no infinite loop');
+    print('building orders ----------> this should only appear once: making sure there is no infinite loop');  //---> important infinite loop check !
     // final orderData = Provider.of<Orders>(context);
     return Scaffold(
       appBar: AppBar(
