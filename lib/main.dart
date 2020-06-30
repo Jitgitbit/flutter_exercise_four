@@ -53,9 +53,10 @@ class MyApp extends StatelessWidget {
           create: (ctx) =>  Cart(),                                //-----> version 4.0.0+ needs create i.o. builder method !
         ),
         ChangeNotifierProxyProvider<Auth, Orders>(
-          create: (ctx) => Orders('', []),
+          create: (ctx) => Orders('', '', []),
           update: (ctx, auth, previousOrders) => Orders(
-            auth.token, 
+            auth.token,
+            auth.userId,
             previousOrders == null ? [] : previousOrders.orders
           ),
         ),
