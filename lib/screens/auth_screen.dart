@@ -45,7 +45,7 @@ class AuthScreen extends StatelessWidget {
                     child: Container(
                       margin: EdgeInsets.only(bottom: 20.0),
                       padding:
-                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
+                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 54.0),
                       transform: Matrix4.rotationZ(-8 * pi / 180)
                         ..translate(-10.0),                                 //----> ".." returns what the previous statement returns
                       // ..translate(-10.0),
@@ -61,10 +61,10 @@ class AuthScreen extends StatelessWidget {
                         ],
                       ),
                       child: Text(
-                        'MyShop',
+                        'PhoenixFlutterShop',
                         style: TextStyle(
                           color: Theme.of(context).accentTextTheme.headline6.color,
-                          fontSize: 50,
+                          fontSize: 30,
                           fontFamily: 'Anton',
                           fontWeight: FontWeight.normal,
                         ),
