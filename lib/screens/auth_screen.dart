@@ -14,7 +14,7 @@ class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
-    // final transformConfig = Matrix4.rotationZ(-8 * pi / 180);                      // --> alternative to ".."
+    // final transformConfig = Matrix4.rotationZ(-8 * pi / 180);                         // --> alternative to ".."
     // transformConfig.translate(-10.0);
     return Scaffold(
       // resizeToAvoidBottomInset: false,
@@ -45,9 +45,9 @@ class AuthScreen extends StatelessWidget {
                     child: Container(
                       margin: EdgeInsets.only(bottom: 20.0),
                       padding:
-                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 54.0),
+                          EdgeInsets.symmetric(vertical: 8.0, horizontal: 94.0),
                       transform: Matrix4.rotationZ(-8 * pi / 180)
-                        ..translate(-10.0),                                         //----> ".." returns what the previous statement returns
+                        ..translate(-10.0),                                           //----> ".." returns what the previous statement returns
                       // ..translate(-10.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
@@ -64,7 +64,7 @@ class AuthScreen extends StatelessWidget {
                         'PhoenixFlutterShop',
                         style: TextStyle(
                           color: Theme.of(context).accentTextTheme.headline6.color,
-                          fontSize: 30,
+                          fontSize: 50,
                           fontFamily: 'Anton',
                           fontWeight: FontWeight.normal,
                         ),
@@ -124,13 +124,13 @@ class _AuthCardState extends State<AuthCard>
         curve: Curves.fastOutSlowIn,
       ),
     );
-    // _heightAnimation.addListener(() => setState(() {}));                              //----> empty because we just want to rerun the build method !!!
+    // _heightAnimation.addListener(() => setState(() {}));                               //----> empty because we just want to rerun the build method !!!
   }
 
   @override
   void dispose() {
     super.dispose();
-    _controller.dispose();                                          //-----> making sure we clean the listener, saving cache !!!
+    _controller.dispose();                                             //-----> making sure we clean the listener, saving cache !!!
   }
 
   void _showErrorDialog(String message) {
@@ -204,7 +204,7 @@ class _AuthCardState extends State<AuthCard>
       setState(() {
         _authMode = AuthMode.Signup;
       });
-      _controller.forward();                                   //----> this starts the animation with forward !!!
+      _controller.forward();                                         //----> this starts the animation with forward !!!
     } else {
       setState(() {
         _authMode = AuthMode.Login;
@@ -221,16 +221,15 @@ class _AuthCardState extends State<AuthCard>
         borderRadius: BorderRadius.circular(10.0),
       ),
       elevation: 8.0,
-      child: AnimatedBuilder(                       //===> now with this we only rebuild the container, i.o. the entire widget tree. More efficient !!!
-        animation: _heightAnimation,
-        builder: (ctx, ch) => Container(
-            // height: _authMode == AuthMode.Signup ? 320 : 260,
-            height: _heightAnimation.value.height,
-            constraints:
-                BoxConstraints(minHeight: _heightAnimation.value.height),
-            width: deviceSize.width * 0.75,
-            padding: EdgeInsets.all(16.0),
-            child: ch),
+      child: AnimatedContainer(                          //===> now with this we only rebuild the container, i.o. the entire widget tree. Even more efficient !!!
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeIn,
+        height: _authMode == AuthMode.Signup ? 320 : 260,
+        // height: _heightAnimation.value.height,
+        constraints:
+            BoxConstraints(minHeight: _authMode == AuthMode.Signup ? 320 : 260),
+        width: deviceSize.width * 0.75,
+        padding: EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
