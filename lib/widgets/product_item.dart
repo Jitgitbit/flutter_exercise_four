@@ -6,7 +6,6 @@ import '../providers/product.dart';
 import '../providers/cart.dart';
 import '../providers/auth.dart';
 
-
 class ProductItem extends StatelessWidget {
   // final String id;
   // final String title;
@@ -29,21 +28,25 @@ class ProductItem extends StatelessWidget {
               arguments: product.id,
             );
           },
-          child: Image.network(
-            product.imageUrl,
+          child: FadeInImage(
+            placeholder: AssetImage('assets/images/product-placeholder.png'),
+            image: NetworkImage(product.imageUrl),
             fit: BoxFit.cover,
           ),
         ),
         footer: GridTileBar(
           backgroundColor: Colors.black87,
-          leading: Consumer<Product>(                      //---> with Consumer we now only reload the subpart for favorites, i.o the whole ProductItem Widget Tree !
-            builder: (ctx, product, _) => IconButton(     //---> the third arg 'child' can be used in case we want to even avoid reloading a subpart within Consumer ! 
-                  icon: Icon(                            //---> no need for the child here, so '_' instead !
+          leading: Consumer<Product>(                     //---> with Consumer we now only reload the subpart for favorites, i.o the whole ProductItem Widget Tree !
+            builder: (ctx, product, _) => IconButton(    //---> the third arg 'child' can be used in case we want to even avoid reloading a subpart within Consumer ! 
+                  icon: Icon(                           //---> no need for the child here, so '_' instead !
                     product.isFavorite ? Icons.favorite : Icons.favorite_border,
                   ),
                   color: Theme.of(context).accentColor,
                   onPressed: () {
-                    product.toggleFavoriteStatus(authData.token, authData.userId);
+                    product.toggleFavoriteStatus(
+                      authData.token,
+                      authData.userId,
+                    );
                   },
                 ),
           ),
